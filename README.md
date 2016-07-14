@@ -37,7 +37,7 @@ Each module is fully documented.
 
 `npm test` to run tests.
 
-????? `npm run cover` to run tests plus coverage.
+`npm run cover` to run tests plus coverage.
 
 ## Contributors
 
