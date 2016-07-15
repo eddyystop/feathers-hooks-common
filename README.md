@@ -2,8 +2,6 @@
 
 Useful hooks for use with Feathersjs services.
 
-Work in progress.
-
 [![Build Status](https://travis-ci.org/eddyystop/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
 [![Coverage Status](https://coveralls.io/repos/github/eddyystop/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/eddyystop/feathers-hooks-common?branch=master)
 
