@@ -7,7 +7,7 @@ Useful hooks for use with Feathersjs services.
 
 ## Code Example
 
-(1) Add created timestamp.
+(1) Add created at timestamp.
 
 ```javascript
 const lib = require('feathers-hooks-common');
@@ -16,7 +16,8 @@ module.exports.before = {
 };
 ```
 
-(2) Add or updated timestamp.
+
+(2) Add or update the updated at timestamp.
 
 ```javascript
 module.exports.before = {
@@ -26,8 +27,9 @@ module.exports.before = {
 };
 ```
 
+
 (3) Normalize URL slug, e.g. https://.../stores/:storeid/...,
-between feathers-socketio, featgers-rest and raw HTTP transports.
+between feathers-socketio, feathers-rest and raw HTTP transports.
 
 ```javascript
 module.exports.before = {
@@ -39,6 +41,7 @@ module.exports.after = {
   create: [ lib.setSlug('storeid') ] // slug value at hook.params.query.storeid
 };
 ```
+
 
 (4) Display current info about the hook to console.
 
@@ -58,7 +61,7 @@ module.exports.after = {
 ```javascript
 const authorizer = lib.restrictToRoles([], 'authorizedRoles', false, 'userId');
 module.exports.before = {
-  create: [ authorizer(['purchasing", 'receiving']) ]
+  create: [ authorizer(['purchasing', 'receiving']) ]
 };
 ```
 
@@ -81,7 +84,7 @@ Run `npm install feathers-hooks-common --save` in your project folder.
 
 ## API Reference
 
-Each module is fully documented.
+Each file fully documents its module's API.
 
 ## Tests
 

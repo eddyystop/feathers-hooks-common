@@ -105,7 +105,6 @@ module.exports.debug = (msg) => (
  */
 module.exports.restrictToRoles =
   (defaultRoles, rolesFieldName = 'roles', defaultIfOwner = false, ownerFieldName = 'ownerId') => {
-    if (typeof defaultRoles === 'string') { defaultRoles = [defaultRoles]; }
     if (!defaultRoles) { defaultRoles = []; }
 
     return (roles, ifOwner) => hooks.restrictToRoles({
