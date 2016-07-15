@@ -1,12 +1,12 @@
 
-/* eslint  max-len: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
+/* eslint  max-len: 0, no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
 
 const hooks = require('feathers-authentication').hooks;
 const utils = require('feathers-hooks-utils');
 
 /**
  * Add a createdAt field (for before/after, create/update/patch).
- * @param {object} options. Field name is options.as or 'createdAt'.
+ * @param {Object} options. Field name is options.as or 'createdAt'.
  * @returns {Function} hook function
  *
  * module.exports.before = {
@@ -23,7 +23,7 @@ module.exports.setCreatedAt = (options) => {
 
 /**
  * Add/update an updatedAt field (for before/after, create/update/patch).
- * @param {object} options. Field name is options.as or 'updatedAt'.
+ * @param {Object} options. Field name is options.as or 'updatedAt'.
  * @returns {Function} hook function
  *
  * module.exports.before = {
@@ -40,7 +40,7 @@ module.exports.setUpdatedAt = (options) => {
 
 /**
  * Normalize slug, placing it in hook.params.query.
- * @param {string} slug name e.g. 'storeId' for http://.../stores/:storeId/...
+ * @param {String} slug name e.g. 'storeId' for http://.../stores/:storeId/...
  *
  * A service may have a slug in its path e.g. app.use('/stores/:storeId/candies', new Service());
  * The service gets slightly different values depending on the transport used by the client.
@@ -76,7 +76,7 @@ module.exports.setSlug = (slug) => ((hook) => {
 
 /**
  * Display debug info in hooks
- * @param {string} msg
+ * @param {String} msg
  *
  * module.exports.before = {
  *   create: [ hooksCommon.debug('step 1') ]
@@ -93,10 +93,10 @@ module.exports.debug = (msg) => (
 
 /**
  * Factory for Feathers hooks.restrictToRoles
- * @param {array|string|undefined} defaultRoles authorized to continue. Default [].
- * @param {string} rolesFieldName name of field containing roles. Default 'roles'.
- * @param {boolean} defaultIfOwner if record owner authorized to continue. Default false.
- * @param {string} ownerFieldName name of field containing owner ID. Default 'ownerId'.
+ * @param {Array|String|undefined} defaultRoles authorized to continue. Default [].
+ * @param {String} rolesFieldName name of field containing roles. Default 'roles'.
+ * @param {Boolean} defaultIfOwner if record owner authorized to continue. Default false.
+ * @param {String} ownerFieldName name of field containing owner ID. Default 'ownerId'.
  *
  * const authorizer = hooksCommon.restrictToRoles([], 'allowedRoles', false, 'ownerId');
  * module.exports.before = {
@@ -111,6 +111,6 @@ module.exports.restrictToRoles =
       roles: roles || defaultRoles,
       fieldName: rolesFieldName || 'roles',
       owner: typeof ifOwner === 'undefined' ? defaultIfOwner : ifOwner,
-      ownerField: ownerFieldName || 'createdById'
-    })
+      ownerField: ownerFieldName || 'createdById',
+    });
   };

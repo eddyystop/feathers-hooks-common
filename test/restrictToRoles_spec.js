@@ -2,9 +2,10 @@
 /* eslint  no-shadow: 0, no-var: 0 */
 
 const assert = require('chai').assert;
-const hooksCommon = require('../src');
+const hooksCommon = require('../lib');
 
-var hook, authorizer;
+var hook;
+var authorizer;
 
 describe('restrictToRoles', () => {
   beforeEach(() => {
@@ -13,11 +14,11 @@ describe('restrictToRoles', () => {
       type: 'before', method: 'create',
       params: {
         provider: 'rest',
-        user: { _id: '123', allowedRoles: ['purchasing', 'accounting'] }
+        user: { _id: '123', allowedRoles: ['purchasing', 'accounting'] },
       },
       app: {
-        get: () => {}
-      }
+        get: () => {},
+      },
     };
   });
 
