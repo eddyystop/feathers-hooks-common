@@ -87,7 +87,7 @@ module.exports.debug = (msg) => (
     console.log(`* ${msg || ''}\ntype:${hook.type}, method: ${hook.method}`);
     if (hook.data) { console.log('data:', hook.data); }
     if (hook.params && hook.params.query) { console.log('query:', hook.params.query); }
-    if (hook.results) { console.log('results:', hook.results); }
+    if (hook.result) { console.log('result:', hook.result); }
   }
 );
 

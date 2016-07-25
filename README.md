@@ -52,7 +52,7 @@ module.exports.after = {
   // type: before, method: create
   // data: { name: 'Joe Doe' }
   // query: { sex: 'm' }
-  // results: { assigned: true }
+  // result: { assigned: true }
 };
 ```
 
