@@ -9,8 +9,8 @@ Useful hooks for use with Feathersjs services.
 
 (1) Join a related item to result (after hook).
 
-- Supports multiple result items.
-- Supports fields with multiple keys.
+- Supports multiple result items, including paginated `find`.
+- Supports key field with an array of keys.
 - Supports multiple joins.
 
 ```javascript
@@ -24,8 +24,7 @@ module.exports.after = {
 (2) Remove fields from data.
 
 - Field names support dot notation e.g. 'name.address.city'
-- Supports multiple data items.
-- Supports paginated `find`.
+- Supports multiple data items, including paginated `find`.
 - May be dynamically disabled, using either a sync or promise based function.
 
 ```javascript
@@ -37,8 +36,7 @@ module.exports.after = {
 (3) Retain only selected fields in data.
 
 - Field names support dot notation
-- Supports multiple data items.
-- Supports paginated `find`.
+- Supports multiple data items, including paginated `find`.
 - May be dynamically disabled, using either a sync or promise based function.
 
 ```javascript
@@ -51,8 +49,7 @@ module.exports.after = {
 (4) Convert fields to lower case.
 
 - Field names support dot notation
-- Supports multiple data items.
-- Supports paginated `find`.
+- Supports multiple data items, including paginated `find`.
 - May be dynamically disabled, using either a sync or promise based function.
 
 ```javascript
@@ -84,8 +81,7 @@ module.exports.before = {
 (1) Remove criteria from query (before hook).
 
 - Field names support dot notation
-- Supports multiple data items.
-- Supports paginated `find`.
+- Supports multiple data items, including paginated `find`.
 - May be dynamically disabled, using either a sync or promise based function.
 
 ```javascript
@@ -97,8 +93,7 @@ module.exports.before = {
 (2) Retain only selected criteria in query (before hook).
 
 - Field names support dot notation
-- Supports multiple data items.
-- Supports paginated `find`.
+- Supports multiple data items, including paginated `find`.
 - May be dynamically disabled, using either a sync or promise based function.
 
 ```javascript
