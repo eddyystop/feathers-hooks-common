@@ -2,13 +2,13 @@
 /* eslint  no-shadow: 0, no-var: 0 */
 
 const assert = require('chai').assert;
-const hooksCommon = require('../lib');
+const hooksCommon = require('../lib/index');
 
 var hook;
 
 describe('setUpdatedAt', () => {
   describe('check field name', () => {
-    before(() => {
+    beforeEach(() => {
       hook = { type: 'before', method: 'create' };
     });
 
