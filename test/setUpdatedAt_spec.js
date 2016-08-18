@@ -12,14 +12,14 @@ describe('setUpdatedAt', () => {
       hook = { type: 'before', method: 'create' };
     });
 
-    it('default field is createdAt', () => {
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.data.createdAt, Date);
+    it('default field is updatedAt', () => {
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.data.updatedAt, Date);
     });
 
     it('name can be provided', () => {
-      hooksCommon.setCreatedAt({ as: 'instantiatedAt' })(hook);
-      assert.instanceOf(hook.data.instantiatedAt, Date);
+      hooksCommon.setUpdatedAt({ as: 'modifiedAt' })(hook);
+      assert.instanceOf(hook.data.modifiedAt, Date);
     });
   });
 
@@ -28,32 +28,32 @@ describe('setUpdatedAt', () => {
 
     it('create no data', () => {
       const hook = { type: 'before', method: 'create' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.data.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.data.updatedAt, Date);
     });
 
     it('create with data', () => {
       const hook = { type: 'before', method: 'create', data: data1 };
-      hooksCommon.setCreatedAt()(hook);
+      hooksCommon.setUpdatedAt()(hook);
       assert.deepEqual(hook.data.a, 'a');
-      assert.instanceOf(hook.data.createdAt, Date);
+      assert.instanceOf(hook.data.updatedAt, Date);
     });
 
     it('update', () => {
       const hook = { type: 'before', method: 'update' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.data.$set.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.data.$set.updatedAt, Date);
     });
 
     it('patch', () => {
       const hook = { type: 'before', method: 'patch' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.data.$set.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.data.$set.updatedAt, Date);
     });
 
     it('remove throws', () => {
       const hook = { type: 'before', method: 'remove' };
-      assert.throws(() => { hooksCommon.setCreatedAt()(hook); });
+      assert.throws(() => { hooksCommon.setUpdatedAt()(hook); });
     });
   });
 
@@ -63,33 +63,33 @@ describe('setUpdatedAt', () => {
 
     it('create no data', () => {
       const hook = { type: 'after', method: 'create' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.result.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.result.updatedAt, Date);
     });
 
     it('create with data', () => {
       const hook = { type: 'after', method: 'create', result: result1 };
-      hooksCommon.setCreatedAt()(hook);
+      hooksCommon.setUpdatedAt()(hook);
       assert.deepEqual(hook.result.a, 'a');
-      assert.instanceOf(hook.result.createdAt, Date);
+      assert.instanceOf(hook.result.updatedAt, Date);
     });
 
     it('update', () => {
       const hook = { type: 'after', method: 'update' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.result.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.result.updatedAt, Date);
     });
 
     it('patch', () => {
       const hook = { type: 'after', method: 'patch' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.result.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.result.updatedAt, Date);
     });
 
     it('remove does not throw', () => {
       const hook = { type: 'after', method: 'remove' };
-      hooksCommon.setCreatedAt()(hook);
-      assert.instanceOf(hook.result.createdAt, Date);
+      hooksCommon.setUpdatedAt()(hook);
+      assert.instanceOf(hook.result.updatedAt, Date);
     });
   });
 });
