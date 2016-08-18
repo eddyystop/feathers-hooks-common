@@ -3,15 +3,19 @@
 /* eslint brace-style: 0, consistent-return: 0, no-param-reassign: 0 */
 
 const errors = require('feathers-errors').errors;
+const utils = require('./utils');
+
+const getByDot = utils.getByDot;
+const setByDot = utils.setByDot;
 
 // undefined is returned if the patch does not exist or if the path's value is undefined.
 // this may cause issues.
-const getByDot = (obj, path) => path.split('.').reduce(
+const getByDotx = (obj, path) => path.split('.').reduce(
   (obj1, part) => (typeof obj1 === 'object' ? obj1[part] : undefined),
   obj
 );
 
-const setByDot = (obj, path, value, ifDelete) => {
+const setByDotx = (obj, path, value, ifDelete) => {
   const parts = path.split('.');
   const lastIndex = parts.length - 1;
   return parts.reduce((obj1, part, i) => {
@@ -275,7 +279,7 @@ export function remove(... fields) {
   return function (hook) {
     const result = hook.type === 'before' ? hook.data : hook.result;
     const update = condition => {
-      if (result && condition) { // todo Can updateItems be used here ? ****************************
+      if (result && condition) {
         if (Array.isArray(result)) {
           result.forEach(removeFields);
         } else {

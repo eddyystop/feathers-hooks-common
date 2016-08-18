@@ -124,9 +124,11 @@ module.exports.before = {
 
 ```javascript
 const usersServerValidation = (values, param2, cb) => {
-  values.email.trim()
-    ? cb(null, { ...values, email: values.email.trim() })
-    : cb({ email: 'Email is invalid' });
+  setTimeout(() => {
+    values.email.trim()
+      ? cb(null, { ...values, email: values.email.trim() }) // sanitize data
+      : cb({ email: 'Email is invalid' });
+  }, 100);
 };
 
 module.exports.before = {

@@ -143,7 +143,7 @@ module.exports.validateSync = (validator, ...rest) => (hook, next) => {
     throw new errors.BadRequest({ errors: formErrors });
   }
 
-  next(null, hook);
+  return hook;
 };
 
 /**
@@ -169,9 +169,7 @@ module.exports.validateUsingCallback = (validator, ...rest) => (hook, next) => {
 
   function cb(formErrors, convertedValues) {
     if (formErrors) {
-      throw new errors.BadRequest(
-        formErrors instanceof Error ? formErrors : { errors: formErrors }
-      );
+      return next(formErrors instanceof Error ? formErrors : { errors: formErrors });
     }
 
     if (convertedValues) {
@@ -195,20 +193,17 @@ module.exports.validateUsingCallback = (validator, ...rest) => (hook, next) => {
  *                Or reject(new errors.GeneralError(...))
  *   resolve:     resolve(data) replaces formValues if truthy
  */
-module.exports.validateUsingPromise = (validator, ...rest) => (hook, next) => {
+module.exports.validateUsingPromise = (validator, ...rest) => (hook) => {
   utils.checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingPromise');
 
-  validator(utils.get(hook), ...rest)
+  return validator(utils.get(hook), ...rest)
     .then(convertedValues => {
       if (convertedValues) {
         utils.setAll(hook, convertedValues);
       }
 
-      next(null, hook); // continue using next, refactoring them out causes issues in some cases
+      return hook;
     })
-    .catch(err => {
-      next(err, hook); // continue using next, refactoring them out causes issues in some cases
-    });
 };
 
 /**
