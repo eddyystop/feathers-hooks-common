@@ -6,8 +6,6 @@ const hooks = require('../lib/index');
 
 var hookBefore;
 var hookAfter;
-var hookFindPaginated;
-var hookFind;
 
 describe('pluckQuery', () => {
   describe('no dynamic decision', () => {
@@ -41,14 +39,14 @@ describe('pluckQuery', () => {
   describe('handles dot notation', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', params: {
-        query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA'}, dept: 'Acct' }
-      }};
+        query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+      } };
     });
 
     it('prop with no dots', () => {
       hooks.pluckQuery('empl')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA'} }
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }
       );
     });
 
@@ -62,7 +60,7 @@ describe('pluckQuery', () => {
     it('prop with 2 dots', () => {
       hooks.pluckQuery('empl.name.last', 'empl.status', 'dept')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { last: 'Doe' }, status: 'AA'}, dept: 'Acct' }
+        { empl: { name: { last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       );
     });
 
@@ -89,12 +87,12 @@ describe('pluckQuery', () => {
     });
 
     it('updates when true', () => {
-      hooks.pluckQuery('last', (hook) => true)(hookBefore);
+      hooks.pluckQuery('last', () => true)(hookBefore);
       assert.deepEqual(hookBefore.params.query, { last: 'Doe' });
     });
 
     it('does not update when false', () => {
-      hooks.lowerCase('last', (hook) => false)(hookBefore);
+      hooks.lowerCase('last', () => false)(hookBefore);
       assert.deepEqual(hookBefore.params.query, { first: 'John', last: 'Doe' });
     });
   });

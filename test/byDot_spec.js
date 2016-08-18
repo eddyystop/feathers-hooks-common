@@ -1,4 +1,7 @@
 
+/* eslint-env es6, node */
+/* eslint no-var: 0 */
+
 const assert = require('chai').assert;
 const utils = require('../lib/utils');
 
@@ -16,9 +19,9 @@ describe('byDot', () => {
         dept: 'acct', manager: {
           ref: 'acct-mgr', employee: {
             name: 'John',
-            address: {line1: '100 5-th Avenue', city: "New York"}
-          }
-        }
+            address: { line1: '100 5-th Avenue', city: 'New York' },
+          },
+        },
       };
     });
 
@@ -39,7 +42,8 @@ describe('byDot', () => {
     });
 
     it('gets leaf level simple variable', () => {
-      assert.equal(getByDot(obj, 'manager.employee.address.city'), obj.manager.employee.address.city);
+      assert.equal(getByDot(obj, 'manager.employee.address.city'),
+        obj.manager.employee.address.city);
     });
 
     it('does not throw on missing path, at top', () => {
@@ -58,7 +62,7 @@ describe('byDot', () => {
   describe('test setByDot', () => {
     beforeEach(() => {
       empty = {};
-      obj = { name: { first: 'John', last: 'Doe'} };
+      obj = { name: { first: 'John', last: 'Doe' } };
     });
 
     it('sets new top level value', () => {
@@ -70,7 +74,7 @@ describe('byDot', () => {
       assert.deepEqual(empty, { a: null, x: 1 });
       setByDot(empty, 'a', undefined);
       assert.deepEqual(empty, { a: undefined, x: 1 });
-      setByDot(empty, 'a', { b: 2});
+      setByDot(empty, 'a', { b: 2 });
       assert.deepEqual(empty, { a: { b: 2 }, x: 1 });
       const fcn = () => true;
       setByDot(empty, 'a', fcn);
@@ -81,7 +85,7 @@ describe('byDot', () => {
       setByDot(empty, 'a.b1', 1);
       assert.deepEqual(empty, { a: { b1: 1 } }, 'a.b2.c1');
       setByDot(empty, 'a.b2.c1', undefined);
-      assert.deepEqual(empty, { a: { b1: 1, b2: { c1: undefined }} }, 'a.b2.c1');
+      assert.deepEqual(empty, { a: { b1: 1, b2: { c1: undefined } } }, 'a.b2.c1');
       const fcn = () => true;
       setByDot(empty, 'a.b2.c2', fcn);
       assert.deepEqual(empty, { a: { b1: 1, b2: { c1: undefined, c2: fcn } } }, 'a.b2.c2');
@@ -89,22 +93,16 @@ describe('byDot', () => {
 
     it('overwrites previous value', () => {
       setByDot(obj, 'name.first', 'Jane');
-      assert.deepEqual(obj, { name: { first: 'Jane', last: 'Doe'} });
+      assert.deepEqual(obj, { name: { first: 'Jane', last: 'Doe' } });
       setByDot(obj, 'name', { firstest: 'Donald', lastest: 'Duck' });
-      assert.deepEqual(obj, { name: { firstest: 'Donald', lastest: 'Duck' }});
+      assert.deepEqual(obj, { name: { firstest: 'Donald', lastest: 'Duck' } });
     });
 
     it('deletes undefined values', () => {
       setByDot(obj, 'name.first', undefined, true);
-      assert.deepEqual(obj, { name: { last: 'Doe'} });
+      assert.deepEqual(obj, { name: { last: 'Doe' } });
       setByDot(obj, 'name', undefined, true);
       assert.deepEqual(obj, {});
     });
   });
 });
-
-// Helpers
-
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}

@@ -1,4 +1,6 @@
 
+/* eslint no-param-reassign: 0 */
+
 /**
  * Get a value from an object using dot notation, e.g. employee.address.city
  *
@@ -29,12 +31,13 @@ export const getByDot = (obj, path) => path.split('.').reduce(
 export const setByDot = (obj, path, value, ifDelete) => {
   const parts = path.split('.');
   const lastIndex = parts.length - 1;
-  return parts.reduce((obj1, part, i) => {
+  return parts.reduce(
+    (obj1, part, i) => {
       if (i !== lastIndex) {
         if (!obj1.hasOwnProperty(part) || typeof obj1[part] !== 'object') {
           obj1[part] = {};
         }
-        return obj1[part]
+        return obj1[part];
       }
 
       obj1[part] = value;
@@ -42,6 +45,7 @@ export const setByDot = (obj, path, value, ifDelete) => {
         delete obj1[part];
       }
       return obj1;
-    }, obj
+    },
+    obj
   );
 };

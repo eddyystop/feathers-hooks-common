@@ -1,4 +1,8 @@
 
+
+/* eslint-env es6, node */
+/* eslint  no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
+
 const assert = require('chai').assert;
 var errors = require('feathers-errors');
 const hooks = require('../lib/index');
@@ -13,7 +17,7 @@ var hookBad;
 describe('validate', () => {
   describe('validateSync', () => {
     beforeEach(() => {
-      fcn = (values) => values.email ? null : { email: 'Email is invalid' };
+      fcn = (values) => (values.email ? null : { email: 'Email is invalid' });
       hookOk = { type: 'before', method: 'create', data: { email: 'a@a.com' } };
       hookBad = { type: 'before', method: 'create', data: { email: '' } };
     });
@@ -24,7 +28,7 @@ describe('validate', () => {
     });
 
     it('test fails', () => {
-      assert.throws(() => { hooks.validateSync(fcn)(hookBad) });
+      assert.throws(() => { hooks.validateSync(fcn)(hookBad); });
     });
   });
 
@@ -38,7 +42,7 @@ describe('validate', () => {
 
       fcn = (values, param2, cb) => {
         setTimeout(() => {
-          values.email.trim()
+          values.email.trim() // eslint-disable-line no-unused-expressions
             ? cb(null)
             : cb({ email: 'Email is invalid' });
         }, 100);
@@ -46,8 +50,8 @@ describe('validate', () => {
 
       fcnSanitize = (values, param2, cb) => {
         setTimeout(() => {
-          values.email.trim()
-            ? cb(null, Object.assign(values, { email: values.email.trim() }) )
+          values.email.trim() // eslint-disable-line no-unused-expressions
+            ? cb(null, Object.assign(values, { email: values.email.trim() }))
             : cb({ email: 'Email is invalid' });
         }, 100);
       };
@@ -73,7 +77,7 @@ describe('validate', () => {
       hooks.validateUsingCallback(fcn, 'val4param2')(hookBad, (err) => {
         assert.deepEqual(err, { errors: { email: 'Email is invalid' } });
         next();
-      })
+      });
     });
   });
 
@@ -85,20 +89,20 @@ describe('validate', () => {
       hookOk = clone(origHookOk);
       hookBad = clone(origHookBad);
 
-      fcn = (values, ...rest) => (
+      fcn = (values) => (
         new Promise((resolve, reject) => {
           setTimeout(() => {
-            values.email.trim()
+            values.email.trim() // eslint-disable-line no-unused-expressions
               ? resolve()
               : reject(new errors.BadRequest({ email: 'Email is invalid' }));
           }, 100);
         })
       );
 
-      fcnSanitize = (values, ...rest) => (
+      fcnSanitize = (values) => (
         new Promise((resolve, reject) => {
           setTimeout(() => {
-            values.email.trim()
+            values.email.trim() // eslint-disable-line no-unused-expressions
               ? resolve(Object.assign(values, { email: values.email.trim() }))
               : reject(new errors.BadRequest({ email: 'Email is invalid' }));
           }, 100);
@@ -126,10 +130,10 @@ describe('validate', () => {
 
     it('test fails on errors', (next) => {
       hooks.validateUsingPromise(fcnSanitize)(hookBad)
-        .then(hook => {
-          assert.fail(true, false);
+        .then(() => {
+          assert.fail(true, false, 'test should not have completed successfully');
         })
-        .catch(err => next());
+        .catch(() => next());
     });
   });
 });

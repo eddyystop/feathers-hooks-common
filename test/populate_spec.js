@@ -1,7 +1,7 @@
 
 /* global assert, describe, it */
-/* eslint  no-param-reassign: 0, no-shadow: 0, no-unused-vars: 0, no-var: 0, one-var: 0,
-one-var-declaration-per-line: 0, no-use-before-define: [2, "nofunc"] */
+/* eslint no-console: 0, no-param-reassign: 0, no-shadow: 0, no-unused-vars: 0, no-var: 0,
+one-var: 0, one-var-declaration-per-line: 0, no-use-before-define: [2, "nofunc"] */
 
 const assert = require('chai').assert;
 const hooks = require('../lib/index');
@@ -37,26 +37,26 @@ describe('populate', () => {
     app.use('/users', usersService);
     app.use('/messages', messagesService);
 
-    hookA = { type: 'after', method: 'create', app: app,
-      result: { _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.' }
+    hookA = { type: 'after', method: 'create', app,
+      result: { _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.' },
     };
-    hookMulti = { type: 'after', method: 'create', app: app,
-      result: { _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.' }
+    hookMulti = { type: 'after', method: 'create', app,
+      result: { _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.' },
     };
-    hookNonPaginated = { type: 'after', method: 'create', app: app,
+    hookNonPaginated = { type: 'after', method: 'create', app,
       result: [
         { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
         { _id: '2', senderId: 'b', text: 'I am. How are you?' },
       ],
     };
-    hookPaginated = { type: 'after', method: 'find', app: app,
+    hookPaginated = { type: 'after', method: 'find', app,
       result: { data: [
         { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
         { _id: '2', senderId: 'b', text: 'I am. How are you?' },
-      ]}
+      ] },
     };
-    hookBad = { type: 'after', method: 'create', app: app,
-      result: { _id: '5', senderId: 'no-suc-id', text: 'I\'m eating an ice cream.' }
+    hookBad = { type: 'after', method: 'create', app,
+      result: { _id: '5', senderId: 'no-suc-id', text: 'I\'m eating an ice cream.' },
     };
   });
 
@@ -111,7 +111,7 @@ describe('populate', () => {
           assert.deepEqual(hook.result, {
             _id: '5',
             senderId: { _id: 'a', name: 'John Doe', isVerified: false },
-            text: 'I\'m eating an ice cream.'
+            text: 'I\'m eating an ice cream.',
           });
           next();
         })
@@ -136,12 +136,11 @@ describe('populate', () => {
       hooks.populate('user', { field: 'senderId', service: '/users' })(hookNonPaginated)
         .then(hook => {
           assert.deepEqual(hook.result, [
-              { _id: '1', senderId: 'a', text: 'Jane, are you there?',
-                user: { _id: 'a', name: 'John Doe', isVerified: false }, },
-              { _id: '2', senderId: 'b', text: 'I am. How are you?',
-                user: { _id: 'b', name: 'Jane Doe', isVerified: true }, },
-            ]
-          );
+            { _id: '1', senderId: 'a', text: 'Jane, are you there?',
+              user: { _id: 'a', name: 'John Doe', isVerified: false } },
+            { _id: '2', senderId: 'b', text: 'I am. How are you?',
+              user: { _id: 'b', name: 'Jane Doe', isVerified: true } },
+          ]);
           next();
         })
         .catch(err => {
@@ -154,12 +153,11 @@ describe('populate', () => {
       hooks.populate('user', { field: 'senderId', service: '/users' })(hookPaginated)
         .then(hook => {
           assert.deepEqual(hook.result, { data: [
-              { _id: '1', senderId: 'a', text: 'Jane, are you there?',
-                user: { _id: 'a', name: 'John Doe', isVerified: false }, },
-              { _id: '2', senderId: 'b', text: 'I am. How are you?',
-                user: { _id: 'b', name: 'Jane Doe', isVerified: true }, },
-            ]}
-          );
+            { _id: '1', senderId: 'a', text: 'Jane, are you there?',
+              user: { _id: 'a', name: 'John Doe', isVerified: false } },
+            { _id: '2', senderId: 'b', text: 'I am. How are you?',
+              user: { _id: 'b', name: 'Jane Doe', isVerified: true } },
+          ] });
           next();
         })
         .catch(err => {

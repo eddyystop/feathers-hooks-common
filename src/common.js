@@ -134,7 +134,7 @@ module.exports.restrictToRoles =
  *   formValues:  { email: 'a@a.com', password: '1234567890' }
  *   returns:     { email: 'Email not found', password: 'Password is incorrect.' }
  */
-module.exports.validateSync = (validator, ...rest) => (hook, next) => {
+module.exports.validateSync = (validator, ...rest) => (hook) => {
   utils.checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateSync');
 
   const formErrors = validator(utils.get(hook), ...rest);
@@ -176,7 +176,7 @@ module.exports.validateUsingCallback = (validator, ...rest) => (hook, next) => {
       utils.setAll(hook, convertedValues);
     }
 
-    next(null, hook);
+    return next(null, hook);
   }
 };
 
@@ -203,7 +203,7 @@ module.exports.validateUsingPromise = (validator, ...rest) => (hook) => {
       }
 
       return hook;
-    })
+    });
 };
 
 /**

@@ -6,8 +6,6 @@ const hooks = require('../lib/index');
 
 var hookBefore;
 var hookAfter;
-var hookFindPaginated;
-var hookFind;
 
 describe('removeQuery', () => {
   describe('no dynamic decision', () => {
@@ -36,14 +34,14 @@ describe('removeQuery', () => {
   describe('handles dot notation', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', params: {
-        query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA'}, dept: 'Acct' }
-      }};
+        query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+      } };
     });
 
     it('prop with no dots', () => {
       hooks.removeQuery('dept')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA'} }
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }
       );
     });
 
@@ -57,21 +55,21 @@ describe('removeQuery', () => {
     it('prop with 2 dots', () => {
       hooks.removeQuery('empl.name.first')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { last: 'Doe' }, status: 'AA'}, dept: 'Acct' }
+        { empl: { name: { last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       );
     });
 
     it('ignores bad or missing paths', () => {
       hooks.removeQuery('empl.xx.first')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA'}, dept: 'Acct' }
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       );
     });
 
     it('ignores bad or missing no dot path', () => {
       hooks.removeQuery('xx')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA'}, dept: 'Acct' }
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       );
     });
   });
@@ -84,12 +82,12 @@ describe('removeQuery', () => {
     });
 
     it('updates when true', () => {
-      hooks.removeQuery('first', (hook) => true)(hookBefore);
+      hooks.removeQuery('first', () => true)(hookBefore);
       assert.deepEqual(hookBefore.params.query, { last: 'Doe' });
     });
 
     it('does not update when false', () => {
-      hooks.lowerCase('last', (hook) => false)(hookBefore);
+      hooks.lowerCase('last', () => false)(hookBefore);
       assert.deepEqual(hookBefore.params.query, { first: 'John', last: 'Doe' });
     });
   });
