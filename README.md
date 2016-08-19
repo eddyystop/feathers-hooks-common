@@ -1,5 +1,14 @@
 ## feathers-hooks-common
 
+**DEPRECATED. Goodbye, adiós, au revoir, auf Wiedersehen, zàijiàn.
+
+This repo has been merged into feathersjs/feathers-hooks-common.
+You should use that instead as it has significantly more features and hooks.
+However there are breaking differences.
+
+The npm package feathers-hooks-common now contains feathersjs/feathers-hooks-common,
+not this repo.**
+
 Useful hooks for use with Feathersjs services.
 
 [![Build Status](https://travis-ci.org/eddyystop/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
